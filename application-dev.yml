@@ -1,0 +1,25 @@
+# ============================================================================
+# SHARED DEV PROFILE - Development Server Settings
+# ============================================================================
+# Applied to all services when SPRING_PROFILES_ACTIVE=dev
+
+# Actuator - Standard endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,env
+  endpoint:
+    health:
+      show-details: when-authorized
+  tracing:
+    sampling:
+      probability: 1.0
+
+# Logging - Info level
+logging:
+  level:
+    root: INFO
+    com.sudagoarth: INFO
+    org.springframework: INFO
+

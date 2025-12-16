@@ -1,0 +1,45 @@
+# ============================================================================
+# CONFIG SERVER - Base Configuration
+# ============================================================================
+
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          clone-on-start: true
+          force-pull: false
+          timeout: 5
+        health:
+          repositories:
+            config-repo:
+              name: ${spring.cloud.config.server.git.name:spring-config-repo}
+              label: ${spring.cloud.config.server.git.default-label:main}
+
+server:
+  port: ${PORT:8888}
+
+# Eureka - Config Server doesn't register
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always
+
+# Logging Configuration
+logging:
+  level:
+    com.sudagoarth.config_server: ${LOG_LEVEL:INFO}
+    org.springframework.cloud.config: INFO
+

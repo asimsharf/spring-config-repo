@@ -1,0 +1,41 @@
+# ============================================================================
+# API GATEWAY - Dev Profile (Development Server)
+# ============================================================================
+# Production-like settings for development server
+
+# Resilience4j - Standard settings
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+    instances:
+      userServiceCB:
+        baseConfig: default
+
+# CORS - Dev origins
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:8080}
+
+# Actuator - Standard endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus,gateway
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# Logging - Info level
+logging:
+  level:
+    root: INFO
+    com.sudagoarth: INFO
+

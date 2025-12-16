@@ -1,0 +1,40 @@
+# ============================================================================
+# DISCOVERY SERVER (EUREKA) - Base Configuration
+# ============================================================================
+
+spring:
+  application:
+    name: discovery-server
+
+server:
+  port: ${PORT:8761}
+
+# Eureka Server Configuration
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+    eviction-interval-timer-in-ms: 60000
+    response-cache-update-interval-ms: 30000
+    response-cache-auto-expiration-time-in-seconds: 180
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Logging Configuration
+logging:
+  level:
+    com.sudagoarth.discovery_server: ${LOG_LEVEL:INFO}
+    com.netflix.eureka: INFO
+    com.netflix.discovery: INFO
+

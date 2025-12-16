@@ -1,0 +1,28 @@
+# ============================================================================
+# SHARED LOCAL PROFILE - Developer-Friendly Settings
+# ============================================================================
+# Applied to all services when SPRING_PROFILES_ACTIVE=local
+
+# Actuator - Expose all endpoints for debugging
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  tracing:
+    sampling:
+      probability: 1.0
+
+# Logging - Debug level for development
+logging:
+  level:
+    root: INFO
+    com.sudagoarth: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.cloud: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+

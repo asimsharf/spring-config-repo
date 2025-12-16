@@ -1,0 +1,49 @@
+# ============================================================================
+# API GATEWAY - Local Profile (Development)
+# ============================================================================
+# Developer-friendly: no security, debug logging, lenient circuit breakers
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/v1/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userServiceCB
+                fallbackUri: forward:/fallback/user-service
+            - StripPrefix=1
+
+# Resilience4j - Lenient for local development
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 60
+    instances:
+      userServiceCB:
+        baseConfig: default
+
+# Actuator - All endpoints for debugging
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# Logging - Debug level
+logging:
+  level:
+    root: INFO
+    com.sudagoarth: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web: DEBUG
+

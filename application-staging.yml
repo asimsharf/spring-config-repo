@@ -1,0 +1,24 @@
+# ============================================================================
+# SHARED STAGING PROFILE - Pre-Production Settings
+# ============================================================================
+# Applied to all services when SPRING_PROFILES_ACTIVE=staging
+
+# Actuator - Limited exposure for security
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never
+  tracing:
+    sampling:
+      probability: 0.5
+
+# Logging - Info level
+logging:
+  level:
+    root: INFO
+    com.sudagoarth: INFO
+
